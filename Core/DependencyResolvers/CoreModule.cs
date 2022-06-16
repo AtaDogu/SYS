@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,8 @@ namespace Core.DependencyResolvers
         {
             collection.AddMemoryCache();
             collection.AddSingleton<ICacheManager, MemoryCacheManager>();
-           //  collection.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+            collection.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+            collection.AddSingleton<Stopwatch>();
         }
     }
 }

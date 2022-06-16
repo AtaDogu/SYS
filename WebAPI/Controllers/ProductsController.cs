@@ -1,12 +1,12 @@
 ﻿using Business.Abstract;
+using Business.Concrete;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
         private IProductService _productService;
@@ -17,29 +17,16 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
-        //[Authorize(Roles = "Product.List")]
-        public IActionResult GetList()
+        public IActionResult GetAll ()
         {
-
             var result = _productService.GetAll();
             if (result.IsSuccess)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
 
-            return BadRequest(result.Message);
-        }
+            return BadRequest(result);
 
-        [HttpGet("getbyid")]
-        public IActionResult GetById(int productId)
-        {
-            var result = _productService.GetById(productId);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
         }
 
         [HttpPost("add")]
@@ -54,40 +41,17 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("update")]
-        public IActionResult Update(Product product)
+        [HttpGet("getbycategoryid")]
+        public IActionResult GetAllByCategoryId (int categoryId)
         {
-            var result = _productService.Update(product);
+            var result = _productService.GetAllByCategoryId(categoryId);
             if (result.IsSuccess)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
+
         }
-
-        [HttpPost("delete")]
-        public IActionResult Delete(Product product)
-        {
-            var result = _productService.Delete(product);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
-        }
-
-        //[HttpPost("transaction")]
-        //public IActionResult TransactionTest(Product product)
-        //{
-        //    var result = _productService.TransactionalOperation(product);
-        //    if (result.Success)
-        //    {
-        //        return Ok(result.Message);
-        //    }
-
-        //    return BadRequest(result.Message);
-        //}
     }
 }
